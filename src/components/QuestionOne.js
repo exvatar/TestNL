@@ -1,9 +1,16 @@
 import React from 'react'
-
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 function QuestionOne(props) {
-    let a = props.data;
-    const sortnumber = (a = []) => {
-        let sortNummber = a.sort(function (a, b) { return a - b })
+    const [number, setNumber] = useState([0])
+    useEffect(() => {
+        axios.get(`https://oclmyk0vd0.execute-api.us-east-1.amazonaws.com/codecamp7/q1?token=pee`)
+            .then(res => {
+                setNumber(res.data);
+            })
+    }, [])
+    const sortnumber = (number) => {
+        let sortNummber = number.sort(function (a, b) { return a - b })
         let show = `[ `;
         for (let index = 0; index < sortNummber.length; index++) {
             show += `${sortNummber[index]}, `;
@@ -60,16 +67,16 @@ function QuestionOne(props) {
         <>
             <h1>Question 1 </h1>
             <h4>เรียงลำดับ จากน้อยไปมาก</h4>
-            {sortnumber(a)}
+            {sortnumber(number)}
 
             <h4>เอาตัวเลขเฉพาะ between 100 - 500 (รวมตัวเลข 100, 500ด้วย)</h4>
-            {primeNumber(a)}
+            {primeNumber(number)}
 
             <h4>เอาตัวเลขเฉพาะ หารด้วย แม่3 หรือ แม่5 ลงตัว</h4>
-            {threeOrFive(a)}
+            {threeOrFive(number)}
 
             <h4>แสดงเฉพาะเลขที่ unique (ไม่ต้องแสดงเลขซ้ำ เช่น 9 สี่ตัว   ให้แสดงแค่ 9ตัวเดียว)</h4>
-            {filterDuplicate(a)}
+            {filterDuplicate(number)}
         </>
     )
 }

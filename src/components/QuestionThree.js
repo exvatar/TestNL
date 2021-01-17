@@ -1,9 +1,18 @@
 import React from 'react'
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 
-function QuestionThree(props) {
-  let b = props.data
+function QuestionThree() {
+  const [data, setData] = useState([])
+  useEffect(() => {
+    axios.get(`https://oclmyk0vd0.execute-api.us-east-1.amazonaws.com/codecamp7/q3?token=pee`)
+    .then(res => {
+      setData(res.data);
+    })
+  }, [])
   let result = [];
   const mapData = (b) => {
+    b = b.filter((value)=> {return value.member !== null})
     b.forEach(data => {
       let checkDub = false
       if (result.length === 0) {
@@ -30,7 +39,7 @@ function QuestionThree(props) {
     <div>
       <h1>Question 3</h1>
       <h4>รวมยอดขายของสมาชิกแต่ละคนโดยชื่อ member.name</h4>
-      {mapData(b)}
+      {mapData(data)}
     </div>
   )
 }
